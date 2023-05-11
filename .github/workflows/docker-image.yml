@@ -3,11 +3,10 @@ name: Docker Image CI
 on:
   push:
     branches:
-      - master
       - develop
   workflow_dispatch:
     branches:
-      - develop
+      - master
 
 jobs:
   push_to_registry:
