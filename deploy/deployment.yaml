@@ -19,7 +19,7 @@ spec:
           image: meir215/php:develop
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 5000
+            - containerPort: 5005
 
 ---
 
@@ -33,6 +33,6 @@ spec:
     app: php-app
   ports:
     - protocol: TCP
-      nodePort: 30036
-      port: 5000
-      targetPort: 5000
+      nodePort: 30035
+      port: 5005
+      targetPort: 5005
