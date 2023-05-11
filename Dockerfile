@@ -6,6 +6,6 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 COPY index.php /var/www/html/index.php
 
-EXPOSE 80
+EXPOSE 8888
 
 CMD service nginx start && php-fpm
