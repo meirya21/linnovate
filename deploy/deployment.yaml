@@ -16,10 +16,12 @@ spec:
     spec:
       containers:
         - name: php-app
-          image: meir215/php
+          namespace: php
+          image: meir215/php:master
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000
+
 
 ---
 
