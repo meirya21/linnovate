@@ -17,7 +17,7 @@ spec:
       containers:
         - name: php-app
           image: meir215/php:master
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
 
