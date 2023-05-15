@@ -2,7 +2,7 @@ FROM php:7.4-fpm
 
 RUN apt-get update && apt-get install -y nginx
 
-COPY ./nginx.conf /etc/nginx/nginx.conf
+ADD ./default.conf /etc/nginx/conf.d
 
 COPY ./index.php /var/www/html/index.php
 
