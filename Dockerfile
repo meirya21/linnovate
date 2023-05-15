@@ -4,8 +4,6 @@ RUN apt-get update && apt-get install -y nginx
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
-ADD ./default.conf /etc/nginx/conf.d
-
 COPY ./index.php /var/www/html/index.php
 
 EXPOSE 80
