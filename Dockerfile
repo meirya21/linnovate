@@ -10,4 +10,4 @@ COPY ./upstream.conf /etc/nginx/upstream.conf
 
 COPY ./index.php /var/www/html/index.php
 
-EXPOSE 8080
+EXPOSE 80
