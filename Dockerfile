@@ -10,4 +10,4 @@ COPY ./index.php /var/www/html/index.php
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off", "&&", "php-fpm"]
