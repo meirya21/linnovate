@@ -8,4 +8,4 @@ COPY ./index.php /var/www/html/index.php
 
 EXPOSE 80
 
-CMD service php7.4-fpm start && nginx -g "daemon off;"
+CMD service php-fpm start && nginx -g "daemon off;"
