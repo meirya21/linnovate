@@ -48,15 +48,11 @@ spec:
 
 ---
 
-kind: ConfigMap
 apiVersion: v1
+kind: ConfigMap
 metadata:
   name: nginx-config
   app: nginx
-volumeMounts:
-  - name: nginx-config-volume
-    mountPath: /etc/nginx/
-    subPath: nginx.conf
 data:
   nginx.conf: |
     events {
