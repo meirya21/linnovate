@@ -21,7 +21,6 @@ spec:
       subPath: nginx.conf
 
 
-
 ---
 
 apiVersion: v1
