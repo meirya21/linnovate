@@ -7,15 +7,14 @@ spec:
     - name: nginx-config-volume
       configMap:
         name: nginx-config
-
   containers:
     - name: php
       image: meir215/php:master
       imagePullPolicy: Always
       ports:
         - containerPort: 9000
-    - image: nginx:1.7.9
-      name: nginx
+    - name: nginx
+      image: nginx:1.7.9
       volumeMounts:
         - name: nginx-config-volume
           mountPath: /etc/nginx/nginx.conf
