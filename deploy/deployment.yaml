@@ -17,6 +17,9 @@ spec:
           mountPath: /var/www/html
       ports:
         - containerPort: 9000
+      envFrom:
+        - configMapRef:
+            name: php-configmap
       lifecycle:
         postStart:
           exec:
@@ -77,3 +80,15 @@ data:
         }
       }
     }
+
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: php-configmap
+data:
+  SCRIPT_FILENAME: "/var/www/html/index.php"
+  FASTCGI_PASS : "php:9000"
+  fastcgi_pass: "php:9000"
