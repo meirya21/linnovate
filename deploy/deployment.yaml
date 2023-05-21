@@ -65,8 +65,9 @@ data:
         # meir check Set nginx to serve files from the shared volume!
         root /var/www/html;
         server_name _;
+        index index.html index.htm index.php;
         location / {
-          try_files $uri $uri/ =404;
+          try_files $uri $uri/ /index.php?$args;
         }
         location ~ \.php$ {
           include fastcgi_params;
