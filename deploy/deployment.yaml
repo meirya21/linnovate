@@ -43,14 +43,15 @@ spec:
   selector:
     app: phpfpm-nginx
   ports:
-  - protocol: TCP
+  - name: http
+    protocol: TCP
     nodePort: 30036
     port: 80
     targetPort: 80
-  - protocol: TCP
+  - name: fastcgi
+    protocol: TCP
     port: 9000
     targetPort: 9000
-    name: fastcgi
 
 ---
 
