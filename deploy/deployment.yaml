@@ -26,9 +26,17 @@ spec:
       volumeMounts:
         - name: shared-files
           mountPath: /var/www/html
-        - name: nginx-config-volume
+        - name: nginx-conf
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
+          readOnly: true
+      volumes:
+      - name: nginx-conf
+        configMap:
+          name: nginx-conf
+          items:
+            - key: nginx.conf
+              path: nginx.conf
   ports:
     - containerPort: 80
 
