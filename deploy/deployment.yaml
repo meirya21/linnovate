@@ -5,7 +5,7 @@ metadata:
 spec:
   volumes:
     - name: shared-files
-    - name: nginx-config-volume
+    - name: nginx-config
       configMap:
         name: nginx-config
   containers:
@@ -26,17 +26,9 @@ spec:
       volumeMounts:
         - name: shared-files
           mountPath: /var/www/html
-        - name: nginx-conf
+        - name: nginx-config
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
-          readOnly: true
-      volumes:
-      - name: nginx-conf
-        configMap:
-          name: nginx-conf
-          items:
-            - key: nginx.conf
-              path: nginx.conf
   ports:
     - containerPort: 80
 
