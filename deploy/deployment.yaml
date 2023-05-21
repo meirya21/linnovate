@@ -8,9 +8,6 @@ spec:
     - name: nginx-config-volume
       configMap:
         name: nginx-config
-    - name: php-config
-      configMap:
-        name: php-config
   containers:
     - name: php
       image: meir215/php:master
