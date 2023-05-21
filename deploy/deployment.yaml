@@ -23,6 +23,9 @@ spec:
           subPath: php.ini
       ports:
         - containerPort: 9000
+      env:
+        - name: SCRIPT_FILENAME
+          value: "/var/www/html/index.php"
       lifecycle:
         postStart:
           exec:
