@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
 # Install Nginx and PHP-FPM
-RUN apt-get update && apt-get install -y nginx php7.4 php7.4-fpm
+RUN apt-get update && apt-get install nginx php7.4 php7.4-fpm -y
 
 # Configure Nginx
 COPY default.conf /etc/nginx/sites-available/default
