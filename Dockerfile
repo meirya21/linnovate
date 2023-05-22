@@ -6,7 +6,6 @@ RUN apt-get update && apt-get install -y nginx php7.4 php7.4-fpm
 # Configure Nginx
 COPY default.conf /etc/nginx/sites-available/default
 COPY index.php /var/www/html/
-RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 RUN echo "cgi.fix_pathinfo=0" >> /etc/php/7.4/fpm/php.ini
 
 # Start Nginx and PHP-FPM
