@@ -3,11 +3,34 @@ kind: Pod
 metadata:
   name: phpfpm-nginx
 spec:
+  volumes:
+    - name: shared-files
+    - name: nginx-config-volume
+      configMap:
+        name: nginx-config
   containers:
     - name: php
       image: meir215/php:master
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: shared-files
+          mountPath: /var/www/html
       ports:
-        - containerPort: 80
+        - containerPort: 9000
+      lifecycle:
+        postStart:
+          exec:
+            command: ["/bin/sh", "-c", "cp -r /app/. /var/www/html"]
+    - name: nginx
+      image: nginx:1.7.9
+      volumeMounts:
+        - name: shared-files
+          mountPath: /var/www/html
+        - name: nginx-config-volume
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+  ports:
+    - containerPort: 80
 
 ---
 
@@ -25,5 +48,34 @@ spec:
     nodePort: 30036
     port: 80
     targetPort: 80
+  - name: fastcgi
+    protocol: TCP
+    port: 9000
+    targetPort: 9000
 
 ---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  nginx.conf: |
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html;
+
+        index index.php index.html;
+
+        server_name _;
+
+        location / {
+        try_files $uri $uri/ =404;
+        }
+        location ~ \.php$ {
+              include snippets/fastcgi-php,conf;
+              fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;       
+        }
+    }
