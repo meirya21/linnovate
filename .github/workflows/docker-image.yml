@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Generate build ID
+        id: prep
         run: |
             branch=${GITHUB_REF##*/}
             sha=${GITHUB_SHA::8}
