@@ -8,6 +8,8 @@ spec:
     - name: nginx-config-volume
       configMap:
         name: nginx-config
+  ports:
+  - containerPort: 80
   containers:
     - name: php
       image: meir215/php:master
@@ -48,10 +50,6 @@ spec:
     nodePort: 30036
     port: 80
     targetPort: 80
-  - name: fastcgi
-    protocol: TCP
-    port: 9000
-    targetPort: 9000
 
 ---
 
