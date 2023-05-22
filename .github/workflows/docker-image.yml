@@ -33,5 +33,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}:${{ build_number }}
+          tags: ${{ steps.meta.outputs.tags }}:{{ build_number }}
           labels: ${{ steps.meta.outputs.labels }}
