@@ -22,7 +22,7 @@ spec:
           exec:
             command: ["/bin/sh", "-c", "cp -r /app/. /var/www/html"]
     - name: nginx
-      image: nginx:1.7.9
+      image: meir215/phpnginx
       volumeMounts:
         - name: shared-files
           mountPath: /var/www/html
