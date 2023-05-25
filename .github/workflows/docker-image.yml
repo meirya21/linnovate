@@ -35,3 +35,12 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      
+      - name: Deploy to ArgoCD
+        uses: argoproj/argo-cd-deploy@v2
+        with:
+          api-server: http://localhost:8080
+          api-token: ${{ secrets.ARGOCD_API_TOKEN }}
+          app-name: php-develop
+          namespace: develop
+          revision: ${{ github.sha }}

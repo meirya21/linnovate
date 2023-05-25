@@ -11,7 +11,7 @@ spec:
   containers:
     - name: php
       image: meir215/php:develop
-      imagePullPolicy: Always
+      imagePullPolicy: IfNotPresent
       volumeMounts:
         - name: shared-files
           mountPath: /var/www/html
@@ -23,6 +23,7 @@ spec:
             command: ["/bin/sh", "-c", "cp -r /app/. /var/www/html"]
     - name: nginx
       image: meir215/phpnginx
+      imagePullPolicy: IfNotPresent
       volumeMounts:
         - name: shared-files
           mountPath: /var/www/html
@@ -39,7 +40,7 @@ kind: ConfigMap
 metadata:
   name: nginx-config
 data:
-  nginx.conf: |
+  index.php: |
     events {}
     http {
       server {
