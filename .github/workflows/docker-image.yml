@@ -38,7 +38,7 @@ jobs:
 
       - name: Deploy to ArgoCD
         env:
-          API_SERVER: localhost:8080
+          API_SERVER: 192.168.49.2:80
           API_TOKEN: ${{ secrets.ARGOCD_API_TOKEN }}
           APP_NAME: php-develop
           NAMESPACE: develop
