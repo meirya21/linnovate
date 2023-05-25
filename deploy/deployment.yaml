@@ -40,7 +40,7 @@ kind: ConfigMap
 metadata:
   name: nginx-config
 data:
-  index.php: |
+  nginx.conf: |
     events {}
     http {
       server {
