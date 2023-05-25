@@ -37,7 +37,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
       
       - name: Deploy to ArgoCD
-        uses: git@github.com:meirya21/linnovate.git@v2
+        uses: argoproj/argo-cd-deploy@v2
         with:
           api-server: http://localhost:8080
           api-token: ${{ secrets.ARGOCD_API_TOKEN }}
