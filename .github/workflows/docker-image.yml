@@ -68,5 +68,5 @@ jobs:
             --path deploy/ \
             --dest-server https://kubernetes.default.svc \
             --dest-namespace $NAMESPACE \
-            --sync-policy automated
+            --sync-policy manual
           argocd app sync $APP_NAME
