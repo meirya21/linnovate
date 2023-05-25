@@ -62,5 +62,11 @@ jobs:
           REVISION: ${{ github.sha }}
         run: |
           argocd login --insecure --username admin --password $API_TOKEN --grpc-web $API_SERVER
-          argocd app sync $APP_NAME --namespace $NAMESPACE
-
+          argocd app create $APP_NAME \
+            --repo https://github.com/meirya21/linnovate.git \
+            --revision $REVISION \
+            --path deploy/ \
+            --dest-server https://kubernetes.default.svc \
+            --dest-namespace $NAMESPACE \
+            --sync-policy automated
+          argocd app sync $APP_NAME
