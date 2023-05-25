@@ -15,19 +15,19 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
-      
+
       - name: Log in to Docker Hub
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: meir215/php
-      
+
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
@@ -35,12 +35,23 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-      
+
       - name: Deploy to ArgoCD
-        uses: argoproj/argo-cd-deploy@v2
-        with:
-          api-server: http://localhost:8080
-          api-token: ${{ secrets.ARGOCD_API_TOKEN }}
-          app-name: php-develop
-          namespace: develop
-          revision: ${{ github.sha }}
+        env:
+          API_SERVER: http://localhost:8080
+          API_TOKEN: ${{ secrets.ARGOCD_API_TOKEN }}
+          APP_NAME: php-develop
+          NAMESPACE: develop
+          REVISION: ${{ github.sha }}
+        run: |
+          curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          chmod +x /usr/local/bin/argocd
+          argocd login --insecure --username admin --password $API_TOKEN --grpc-web $API_SERVER
+          argocd app create $APP_NAME \
+            --repo https://github.com/meirya21/linnovate.git \
+            --revision $REVISION \
+            --path . \
+            --dest-server https://kubernetes.default.svc \
+            --dest-namespace $NAMESPACE \
+            --sync-policy automated
+          argocd app sync $APP_NAME
