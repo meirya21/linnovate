@@ -35,38 +35,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Download ArgoCD binary
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const fs = require('fs');
-            const https = require('https');
-            const file = fs.createWriteStream('/usr/local/bin/argocd');
-            https.get('https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64', (response) => {
-              response.pipe(file);
-              file.on('finish', () => {
-                file.close();
-              });
-            });
-
-      - name: Set executable permissions
-        run: chmod +x /usr/local/bin/argocd
-
-      - name: Deploy to ArgoCD
-        env:
-          API_SERVER: 192.168.49.2:8080
-          API_TOKEN: ${{ secrets.ARGOCD_API_TOKEN }}
-          APP_NAME: php-develop
-          NAMESPACE: develop
-          REVISION: ${{ github.sha }}
-        run: |
-          argocd login --insecure --username admin --password $API_TOKEN --grpc-web $API_SERVER
-          argocd app create $APP_NAME \
-            --repo https://github.com/meirya21/linnovate.git \
-            --revision $REVISION \
-            --path deploy/ \
-            --dest-server https://kubernetes.default.svc \
-            --dest-namespace $NAMESPACE \
-            --sync-policy manual
-          argocd app sync $APP_NAME
